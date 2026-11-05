@@ -1,0 +1,133 @@
+body {
+    margin: 0;
+    font-family: Arial;
+    background-color: lightgray;
+}
+
+/* Navigation */
+nav {
+    background-color: black;
+    padding: 15px;
+    text-align: center;
+    position: sticky;
+    top: 0;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin: 20px;
+}
+
+nav a:hover {
+    color: orange;
+}
+
+/* Heading */
+h1 {
+    text-align: center;
+    color: red;
+    margin: 30px;
+}
+
+/* Buttons */
+.buttons {
+    text-align: center;
+    margin: 20px;
+}
+
+button {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: orange;
+}
+
+/* Team Selection */
+.about {
+    background-color: white;
+    margin: 30px 50px;
+    padding: 20px;
+    text-align: center;
+    border: 1px solid gray;
+}
+
+.about label {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+select {
+    padding: 8px;
+}
+
+/* Matches */
+.matches {
+    margin: 30px 50px;
+}
+
+.matches h2,
+.guidelines h2 {
+    text-align: center;
+    color: red;
+}
+
+table {
+    width: 100%;
+    background-color: white;
+    border-collapse: collapse;
+}
+
+th {
+    background-color: red;
+    color: white;
+}
+
+th,
+td {
+    border: 1px solid gray;
+    padding: 10px;
+    text-align: center;
+}
+
+/* Guidelines */
+.guidelines {
+    margin: 30px 50px;
+}
+
+.cards {
+    display: flex;
+    justify-content: space-between;
+}
+
+.card {
+    background-color: white;
+    border: 1px solid gray;
+    width: 30%;
+    padding: 15px;
+}
+
+.card h3 {
+    color: red;
+    text-align: center;
+}
+
+pre {
+    font-family: Arial;
+    white-space: pre-wrap;
+}
+
+/* Footer */
+footer {
+    background-color: black;
+    color: white;
+    text-align: center;
+    padding: 12px;
+    margin-top: 30px;
+}
