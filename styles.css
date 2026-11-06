@@ -1,133 +1,160 @@
 body {
+    background-color: lightblue !important;
+}
+body {
     margin: 0;
-    font-family: Arial;
-    background-color: lightgray;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
 }
 
-/* Navigation */
+/* NAVIGATION BAR */
+
 nav {
-    background-color: black;
+    background-color: navy;
     padding: 15px;
-    text-align: center;
     position: sticky;
     top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
 }
 
-nav a {
-    color: white;
+nav h2 {
+    color: yellow;
+}
+
+a {
     text-decoration: none;
-    margin: 20px;
+    margin: 15px;
+    color: white;
+    font-size: 20px;
 }
 
-nav a:hover {
-    color: orange;
+a:hover {
+    color: red;
 }
 
-/* Heading */
+/* SECTIONS */
+
+section {
+    margin: 30px;
+    padding: 30px;
+    text-align: center;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 5px 10px gray;
+}
+
 h1 {
     text-align: center;
-    color: blue;
-    margin: 30px;
+    color: navy;
 }
 
-/* Buttons */
-.buttons {
-    text-align: center;
-    margin: 20px;
-}
-
-button {
-    background-color: blue  ;
-    color: white;
-    border: none;
-    padding: 10px 18px;
-    margin: 5px;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: orange;
-}
-
-/* Team Selection */
-.about {
-    background-color: white;
-    margin: 30px 50px;
-    padding: 20px;
-    text-align: center;
-    border: 1px solid gray;
-}
-
-.about label {
-    font-weight: bold;
-    margin-right: 10px;
-}
-
-select {
-    padding: 8px;
-}
-
-/* Matches */
-.matches {
-    margin: 30px 50px;
-}
-
-.matches h2,
-.guidelines h2 {
-    text-align: center;
-    color: blue;
-}
+/* TABLE */
 
 table {
     width: 100%;
-    background-color: white;
     border-collapse: collapse;
+    box-shadow: 0 14px 12px rgba(0,0,0,0.2);
+}
+
+th, td {
+    border: 1px solid black;
+    padding: 15px;
+    text-align: center;
 }
 
 th {
-    background-color: blue ;
+    background-color: navy;
     color: white;
 }
 
-th,
-td {
-    border: 1px solid gray;
-    padding: 10px;
-    text-align: center;
-}
+/* BOOKING FORM */
 
-/* Guidelines */
-.guidelines {
-    margin: 30px 50px;
-}
-
-.cards {
+form {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
 }
 
-.card {
-    background-color: white;
-    border: 1px solid gray;
-    width: 30%;
-    padding: 15px;
+label {
+    margin-top: 12px;
+    font-weight: bold;
 }
 
-.card h3 {
-    color: blue;
-    text-align: center;
-}
-
-pre {
-    font-family: Arial;
-    white-space: pre-wrap;
-}
-
-/* Footer */
-footer {
-    background-color: black;
-    color: white;
-    text-align: center;
+input, select {
+    display: block;
+    margin: 10px auto;
     padding: 12px;
-    margin-top: 30px;
+    width: 60%;
+    border-radius: 5px;
+    border: 1px solid gray;
+}
+
+/* SUBMIT BUTTON */
+
+input[type="submit"] {
+    background-color: navy;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    width: 40%;
+}
+
+input[type="submit"]:hover {
+    background-color: red;
+}
+
+/* BOOKING CARDS */
+
+.booking-card {
+    border: 2px dashed navy;
+    margin: 20px;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: left;
+    background-color: #f4f4f4;
+}
+
+.booking-card h3 {
+    color: navy;
+}
+
+/* FOOTER */
+
+footer {
+    background-color: navy;
+    color: yellow;
+    width: 100%;
+    font-size: 20px;
+    text-align: center;
+    padding: 20px 0;
+    margin-top: auto;
+}
+
+/* RESPONSIVE DESIGN */
+
+@media(max-width: 600px) {
+
+    nav {
+        flex-direction: column;
+    }
+
+    input, select {
+        width: 90%;
+    }
+
+    section {
+        margin: 10px;
+        padding: 15px;
+    }
+
+    table {
+        font-size: 12px;
+    }
+
 }
