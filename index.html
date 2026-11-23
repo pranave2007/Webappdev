@@ -38,7 +38,7 @@
             <td>25th August</td>
             <td>Bangalore</td>
             <td>500</td>
-            <td><button class="book-btn" data-match="CSK vs RCB">Book</button></td>
+            <td><button type="button" class="book-btn" data-match="CSK vs RCB">Book</button></td>
         </tr>
 
         <tr>
@@ -47,7 +47,7 @@
             <td>28th August</td>
             <td>Mumbai</td>
             <td>500</td>
-            <td><button class="book-btn" data-match="MI vs DC">Book</button></td>
+            <td><button type="button" class="book-btn" data-match="MI vs DC">Book</button></td>
         </tr>
     </table>
 </section>
@@ -77,12 +77,35 @@
         <label>Choose date:</label>
         <input type="date" id="d1">
 
-        <label>Choose category:</label>
+        <label>Choose Stand Category:</label>
         <select id="c1">
-            <option>General</option>
-            <option>Premium</option>
-            <option>VIP</option>
+            <option value="General">General - Rs.500</option>
+            <option value="Premium">Premium - Rs.1000</option>
+            <option value="VIP">VIP - Rs.2000</option>
         </select>
+
+        <!-- QUANTITY -->
+
+        <label>Choose Ticket Quantity:</label>
+        <input type="number" id="q1" min="1" max="10" value="1">
+
+        <!-- BOOKING SUMMARY -->
+
+        <div id="bookingSummary" class="summary-card">
+
+            <h2>Booking Summary</h2>
+
+            <p>Match: <span id="summaryMatch">CSK vs RCB</span></p>
+
+            <p>Stand: <span id="summaryStand">General</span></p>
+
+            <p>Quantity: <span id="summaryQuantity">1</span></p>
+
+            <p>Price per ticket: Rs.<span id="summaryPrice">500</span></p>
+
+            <h3>Total Price: Rs.<span id="summaryTotal">500</span></h3>
+
+        </div>
 
         <input type="submit" value="Book My Ticket">
 
@@ -113,7 +136,7 @@
     &copy; All Rights Reserved | IPL 2026
 </footer>
 
-<!-- TOAST NOTIFICATION -->
+<!-- TOAST -->
 
 <div id="toast"></div>
 

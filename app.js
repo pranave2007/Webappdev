@@ -1,6 +1,8 @@
 
 // REUSABLE TOAST FUNCTION
 
+let toastTimer;
+
 function showToast(message) {
 
     let toast = document.getElementById("toast");
@@ -8,7 +10,9 @@ function showToast(message) {
     toast.innerText = message;
     toast.className = "show";
 
-    setTimeout(function() {
+    clearTimeout(toastTimer);
+
+    toastTimer = setTimeout(function() {
         toast.className = "";
     }, 3000);
 }
@@ -22,6 +26,8 @@ document.querySelectorAll(".book-btn").forEach(function(btn) {
 
         document.getElementById("o1").value = this.dataset.match;
 
+        updateSummary(false);
+
         document.getElementById("booking").scrollIntoView({
             behavior: "smooth"
         });
@@ -33,16 +39,112 @@ document.querySelectorAll(".book-btn").forEach(function(btn) {
 });
 
 
+// TICKET PRICE FUNCTION
+
+function getTicketPrice(stand) {
+
+    if (stand == "General") {
+        return 500;
+    }
+    else if (stand == "Premium") {
+        return 1000;
+    }
+    else if (stand == "VIP") {
+        return 2000;
+    }
+
+    return 0;
+}
+
+
+// LIVE BOOKING SUMMARY
+
+function updateSummary(showMessage = true) {
+
+    let match = document.getElementById("o1").value;
+
+    let stand = document.getElementById("c1").value;
+
+    let quantity = parseInt(document.getElementById("q1").value);
+
+    let price = getTicketPrice(stand);
+
+    if (isNaN(quantity) || quantity < 1) {
+        quantity = 0;
+    }
+
+    let total = price * quantity;
+
+    document.getElementById("summaryMatch").innerText = match;
+
+    document.getElementById("summaryStand").innerText = stand;
+
+    document.getElementById("summaryQuantity").innerText = quantity;
+
+    document.getElementById("summaryPrice").innerText = price;
+
+    document.getElementById("summaryTotal").innerText = total;
+
+    if (showMessage) {
+        showToast("Booking summary updated!");
+    }
+
+}
+
+
+// DOM SELECTORS
+
+let matchSelect = document.getElementById("o1");
+
+let standSelect = document.querySelector("#c1");
+
+let quantityInput = document.getElementById("q1");
+
+
+// CHANGE EVENT LISTENERS
+
+matchSelect.addEventListener("change", function() {
+    updateSummary();
+});
+
+standSelect.addEventListener("change", function() {
+    updateSummary();
+});
+
+quantityInput.addEventListener("change", function() {
+    updateSummary();
+});
+
+
+// LIVE QUANTITY UPDATE
+
+quantityInput.addEventListener("input", function() {
+    updateSummary(false);
+});
+
+
 // BOOKING FUNCTION
 
 function myfun() {
 
     let name = document.getElementById("t1").value.trim();
+
     let email = document.getElementById("e1").value.trim();
+
     let phone = document.getElementById("p1").value.trim();
-    let match = document.getElementById("o1").value;
+
+    let match = matchSelect.value;
+
     let date = document.getElementById("d1").value;
-    let ticketType = document.getElementById("c1").value;
+
+    let ticketType = standSelect.value;
+
+    let quantity = parseInt(quantityInput.value);
+
+    let ticketPrice = getTicketPrice(ticketType);
+
+    let totalPrice = ticketPrice * quantity;
+
 
     if (name == "") {
         alert("Please enter your name");
@@ -78,27 +180,30 @@ function myfun() {
         return false;
     }
 
-    let ticketPrice;
+    if (isNaN(quantity) || quantity < 1 || quantity > 10) {
+        alert("Please enter quantity between 1 and 10");
+        return false;
+    }
 
-    if (ticketType == "General") {
-        ticketPrice = 500;
-    }
-    else if (ticketType == "Premium") {
-        ticketPrice = 1000;
-    }
-    else if (ticketType == "VIP") {
-        ticketPrice = 2000;
-    }
+
+    // BOOKING OBJECT
 
     let booking = {
+
         name: name,
         email: email,
         phone: phone,
         match: match,
         date: date,
         ticketType: ticketType,
-        ticketPrice: ticketPrice
+        quantity: quantity,
+        ticketPrice: ticketPrice,
+        totalPrice: totalPrice
+
     };
+
+
+    // SAVE TO LOCAL STORAGE
 
     let bookings = JSON.parse(localStorage.getItem("bookings")) || [];
 
@@ -106,13 +211,17 @@ function myfun() {
 
     localStorage.setItem("bookings", JSON.stringify(bookings));
 
-    showToast("Ticket booked successfully! Price: Rs." + ticketPrice);
+
+    showToast("Booking successful! Total: Rs." + totalPrice);
 
     document.getElementById("bookingForm").reset();
+
+    updateSummary(false);
 
     displayBookings();
 
     return true;
+
 }
 
 
@@ -144,8 +253,10 @@ function displayBookings() {
             <p>Phone: ${b.phone || "-"}</p>
             <p>Match: ${b.match || "-"}</p>
             <p>Date: ${b.date || "-"}</p>
-            <p>Category: ${b.ticketType || "-"}</p>
-            <p>Price: Rs.${b.ticketPrice || "-"}</p>
+            <p>Stand: ${b.ticketType || "-"}</p>
+            <p>Quantity: ${b.quantity || 1}</p>
+            <p>Price per ticket: Rs.${b.ticketPrice || "-"}</p>
+            <p>Total Price: Rs.${b.totalPrice || b.ticketPrice || "-"}</p>
         `;
 
         div.appendChild(card);
@@ -166,6 +277,8 @@ document.getElementById("bookingForm").addEventListener("submit", function(e) {
 });
 
 
-// LOAD BOOKINGS
+// INITIAL LOAD
+
+updateSummary(false);
 
 displayBookings();

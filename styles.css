@@ -1,4 +1,6 @@
 
+/* GENERAL BODY */
+
 body {
     margin: 0;
     min-height: 100vh;
@@ -19,6 +21,7 @@ nav {
     align-items: center;
     justify-content: space-around;
     flex-wrap: wrap;
+    z-index: 100;
 }
 
 nav h2 {
@@ -106,6 +109,7 @@ input, select {
     width: 60%;
     border-radius: 5px;
     border: 1px solid gray;
+    box-sizing: border-box;
 }
 
 /* SUBMIT BUTTON */
@@ -120,6 +124,37 @@ input[type="submit"] {
 
 input[type="submit"]:hover {
     background-color: red;
+}
+
+/* BOOKING SUMMARY CARD */
+
+.summary-card {
+    width: 60%;
+    margin: 25px auto;
+    padding: 20px;
+    background-color: #e6f0ff;
+    border: 2px solid navy;
+    border-radius: 12px;
+    text-align: left;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    box-sizing: border-box;
+}
+
+.summary-card h2 {
+    color: navy;
+    text-align: center;
+}
+
+.summary-card p {
+    font-size: 16px;
+    margin: 12px 0;
+}
+
+.summary-card h3 {
+    color: navy;
+    border-top: 1px solid navy;
+    padding-top: 15px;
+    text-align: center;
 }
 
 /* BOOKING CARDS */
@@ -160,13 +195,23 @@ input[type="submit"]:hover {
 }
 
 @keyframes fadein {
-    from { opacity: 0; bottom: 0; }
-    to { opacity: 1; bottom: 30px; }
+    from {
+        opacity: 0;
+        bottom: 0;
+    }
+    to {
+        opacity: 1;
+        bottom: 30px;
+    }
 }
 
 @keyframes fadeout {
-    from { opacity: 1; }
-    to { opacity: 0; }
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
 }
 
 /* FOOTER */
@@ -205,4 +250,9 @@ footer {
     th, td {
         padding: 7px;
     }
+
+    .summary-card {
+        width: 95%;
+    }
+
 }
