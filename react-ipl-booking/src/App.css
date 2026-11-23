@@ -110,3 +110,41 @@ button {
     font-size: 28px;
   }
 }
+
+.booking-section {
+  padding: 40px 6%;
+  background: white;
+  margin-top: 20px;
+}
+
+.booking-section h1 {
+  margin-bottom: 20px;
+}
+
+.booking-section h3 {
+  margin-bottom: 12px;
+  color: #172b64;
+}
+
+.booking-section form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 400px;
+  margin-top: 20px;
+}
+
+.booking-section input {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.booking-section button {
+  width: fit-content;
+}
+
+.booking-message {
+  margin-top: 20px;
+  font-weight: bold;
+}
