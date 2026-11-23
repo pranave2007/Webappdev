@@ -1,30 +1,91 @@
 
-// REUSABLE TOAST FUNCTION
-
+// ACTIVITY 5: REUSABLE TOAST FUNCTION
 let toastTimer;
 
 function showToast(message) {
-
-    let toast = document.getElementById("toast");
-
+    const toast = document.getElementById("toast");
     toast.innerText = message;
     toast.className = "show";
 
     clearTimeout(toastTimer);
-
-    toastTimer = setTimeout(function() {
+    toastTimer = setTimeout(function () {
         toast.className = "";
     }, 3000);
 }
 
 
-// SMOOTH SCROLLING AND BOOK BUTTON
+// ACTIVITY 8: HAMBURGER MENU
+const menuToggle = document.getElementById("menuToggle");
+const navLinks = document.getElementById("navLinks");
 
-document.querySelectorAll(".book-btn").forEach(function(btn) {
+menuToggle.addEventListener("click", function () {
+    const isOpen = navLinks.classList.toggle("open");
+    menuToggle.setAttribute("aria-expanded", isOpen);
+});
 
-    btn.addEventListener("click", function() {
+// Close menu after clicking a navigation link
+navLinks.querySelectorAll("a").forEach(function (link) {
+    link.addEventListener("click", function () {
+        navLinks.classList.remove("open");
+        menuToggle.setAttribute("aria-expanded", "false");
+    });
+});
 
-        document.getElementById("o1").value = this.dataset.match;
+
+// ACTIVITY 8: FILTER MATCH CARDS BY TEAM
+const teamFilter = document.getElementById("teamFilter");
+const matchCards = document.querySelectorAll(".match-card");
+const noMatches = document.getElementById("noMatches");
+
+teamFilter.addEventListener("change", function () {
+    const selectedTeam = this.value;
+    let visibleCount = 0;
+
+    matchCards.forEach(function (card) {
+        const teams = card.dataset.teams.split(" ");
+
+        const showCard =
+            selectedTeam === "all" ||
+            teams.includes(selectedTeam);
+
+        card.hidden = !showCard;
+
+        if (showCard) {
+            visibleCount++;
+        }
+    });
+
+    noMatches.hidden = visibleCount !== 0;
+});
+
+
+// ACTIVITY 8: GRID AND LIST VIEW
+const matchContainer = document.getElementById("matchContainer");
+const gridViewBtn = document.getElementById("gridViewBtn");
+const listViewBtn = document.getElementById("listViewBtn");
+
+gridViewBtn.addEventListener("click", function () {
+    matchContainer.classList.remove("match-list");
+    matchContainer.classList.add("match-grid");
+
+    gridViewBtn.classList.add("active");
+    listViewBtn.classList.remove("active");
+});
+
+listViewBtn.addEventListener("click", function () {
+    matchContainer.classList.remove("match-grid");
+    matchContainer.classList.add("match-list");
+
+    listViewBtn.classList.add("active");
+    gridViewBtn.classList.remove("active");
+});
+
+
+// BOOK BUTTON: SELECT MATCH AND SCROLL TO FORM
+document.querySelectorAll(".book-btn").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+        document.getElementById("o1").value =
+            this.dataset.match;
 
         updateSummary(false);
 
@@ -33,149 +94,114 @@ document.querySelectorAll(".book-btn").forEach(function(btn) {
         });
 
         showToast("Please complete your ticket booking!");
-
     });
-
 });
 
 
-// TICKET PRICE FUNCTION
-
+// ACTIVITY 7: TICKET PRICE
 function getTicketPrice(stand) {
-
-    if (stand == "General") {
-        return 500;
-    }
-    else if (stand == "Premium") {
-        return 1000;
-    }
-    else if (stand == "VIP") {
-        return 2000;
-    }
+    if (stand === "General") return 500;
+    if (stand === "Premium") return 1000;
+    if (stand === "VIP") return 2000;
 
     return 0;
 }
 
 
-// LIVE BOOKING SUMMARY
-
+// ACTIVITY 7: LIVE BOOKING SUMMARY
 function updateSummary(showMessage = true) {
+    const match = document.getElementById("o1").value;
+    const stand = document.getElementById("c1").value;
 
-    let match = document.getElementById("o1").value;
-
-    let stand = document.getElementById("c1").value;
-
-    let quantity = parseInt(document.getElementById("q1").value);
-
-    let price = getTicketPrice(stand);
+    let quantity = parseInt(
+        document.getElementById("q1").value, 10
+    );
 
     if (isNaN(quantity) || quantity < 1) {
         quantity = 0;
     }
 
-    let total = price * quantity;
+    const price = getTicketPrice(stand);
+    const total = price * quantity;
 
     document.getElementById("summaryMatch").innerText = match;
-
     document.getElementById("summaryStand").innerText = stand;
-
     document.getElementById("summaryQuantity").innerText = quantity;
-
     document.getElementById("summaryPrice").innerText = price;
-
     document.getElementById("summaryTotal").innerText = total;
 
     if (showMessage) {
         showToast("Booking summary updated!");
     }
-
 }
 
 
-// DOM SELECTORS
+// DOM SELECTORS AND CHANGE EVENTS
+const matchSelect = document.getElementById("o1");
+const standSelect = document.querySelector("#c1");
+const quantityInput = document.getElementById("q1");
 
-let matchSelect = document.getElementById("o1");
-
-let standSelect = document.querySelector("#c1");
-
-let quantityInput = document.getElementById("q1");
-
-
-// CHANGE EVENT LISTENERS
-
-matchSelect.addEventListener("change", function() {
+matchSelect.addEventListener("change", function () {
     updateSummary();
 });
 
-standSelect.addEventListener("change", function() {
+standSelect.addEventListener("change", function () {
     updateSummary();
 });
 
-quantityInput.addEventListener("change", function() {
+quantityInput.addEventListener("change", function () {
     updateSummary();
 });
 
-
-// LIVE QUANTITY UPDATE
-
-quantityInput.addEventListener("input", function() {
+quantityInput.addEventListener("input", function () {
     updateSummary(false);
 });
 
 
 // BOOKING FUNCTION
-
 function myfun() {
+    const name = document.getElementById("t1").value.trim();
+    const email = document.getElementById("e1").value.trim();
+    const phone = document.getElementById("p1").value.trim();
 
-    let name = document.getElementById("t1").value.trim();
+    const match = matchSelect.value;
+    const date = document.getElementById("d1").value;
+    const ticketType = standSelect.value;
 
-    let email = document.getElementById("e1").value.trim();
+    const quantity = parseInt(quantityInput.value, 10);
+    const ticketPrice = getTicketPrice(ticketType);
+    const totalPrice = ticketPrice * quantity;
 
-    let phone = document.getElementById("p1").value.trim();
-
-    let match = matchSelect.value;
-
-    let date = document.getElementById("d1").value;
-
-    let ticketType = standSelect.value;
-
-    let quantity = parseInt(quantityInput.value);
-
-    let ticketPrice = getTicketPrice(ticketType);
-
-    let totalPrice = ticketPrice * quantity;
-
-
-    if (name == "") {
+    if (name === "") {
         alert("Please enter your name");
         return false;
     }
 
-    if (email == "") {
+    if (email === "") {
         alert("Please enter your email");
         return false;
     }
 
-    let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!emailPattern.test(email)) {
         alert("Please enter a valid email");
         return false;
     }
 
-    if (phone == "") {
+    if (phone === "") {
         alert("Please enter your phone number");
         return false;
     }
 
-    let phonePattern = /^[0-9]{10}$/;
+    const phonePattern = /^[0-9]{10}$/;
 
     if (!phonePattern.test(phone)) {
         alert("Please enter a valid 10 digit phone number");
         return false;
     }
 
-    if (date == "") {
+    if (date === "") {
         alert("Please select a date");
         return false;
     }
@@ -187,9 +213,7 @@ function myfun() {
 
 
     // BOOKING OBJECT
-
     let booking = {
-
         name: name,
         email: email,
         phone: phone,
@@ -199,17 +223,20 @@ function myfun() {
         quantity: quantity,
         ticketPrice: ticketPrice,
         totalPrice: totalPrice
-
     };
 
 
-    // SAVE TO LOCAL STORAGE
-
-    let bookings = JSON.parse(localStorage.getItem("bookings")) || [];
+    // SAVE BOOKING IN LOCAL STORAGE
+    let bookings = JSON.parse(
+        localStorage.getItem("bookings")
+    ) || [];
 
     bookings.push(booking);
 
-    localStorage.setItem("bookings", JSON.stringify(bookings));
+    localStorage.setItem(
+        "bookings",
+        JSON.stringify(bookings)
+    );
 
 
     showToast("Booking successful! Total: Rs." + totalPrice);
@@ -221,26 +248,25 @@ function myfun() {
     displayBookings();
 
     return true;
-
 }
 
 
-// DISPLAY BOOKINGS
-
+// DISPLAY SAVED BOOKINGS
 function displayBookings() {
-
-    let bookings = JSON.parse(localStorage.getItem("bookings")) || [];
+    let bookings = JSON.parse(
+        localStorage.getItem("bookings")
+    ) || [];
 
     let div = document.getElementById("myid");
 
     div.innerHTML = "";
 
-    if (bookings.length == 0) {
+    if (bookings.length === 0) {
         div.innerHTML = "<p>No bookings available</p>";
         return;
     }
 
-    bookings.forEach(function(b, i) {
+    bookings.forEach(function (b, i) {
 
         let card = document.createElement("div");
 
@@ -248,6 +274,7 @@ function displayBookings() {
 
         card.innerHTML = `
             <h3>Booking ${i + 1}</h3>
+
             <p>Name: ${b.name || "-"}</p>
             <p>Email: ${b.email || "-"}</p>
             <p>Phone: ${b.phone || "-"}</p>
@@ -260,25 +287,20 @@ function displayBookings() {
         `;
 
         div.appendChild(card);
-
     });
-
 }
 
 
 // FORM SUBMISSION
+document.getElementById("bookingForm").addEventListener(
+    "submit",
+    function (event) {
+        event.preventDefault();
+        myfun();
+    }
+);
 
-document.getElementById("bookingForm").addEventListener("submit", function(e) {
 
-    e.preventDefault();
-
-    myfun();
-
-});
-
-
-// INITIAL LOAD
-
+// INITIAL PAGE LOAD
 updateSummary(false);
-
 displayBookings();

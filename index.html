@@ -1,144 +1,145 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IPL Ticket Booking</title>
     <link rel="stylesheet" href="./styles.css">
     <script src="./app.js" defer></script>
 </head>
-
 <body>
-
-<nav>
-    <h2>IPL 2026</h2>
-    <a href="#matches">Matches</a>
-    <a href="#booking">Book Tickets</a>
-    <a href="#mybookings">My Bookings</a>
-    <a href="#guidelines">Guidelines</a>
-</nav>
-
-<!-- MATCHES SECTION -->
-
-<section id="matches">
-    <h1>IPL Matches</h1>
-
-    <table>
-        <tr>
-            <th>Match</th>
-            <th>Teams</th>
-            <th>Date</th>
-            <th>Venue</th>
-            <th>Price</th>
-            <th>Action</th>
-        </tr>
-
-        <tr>
-            <td>1</td>
-            <td>CSK vs RCB</td>
-            <td>25th August</td>
-            <td>Bangalore</td>
-            <td>500</td>
-            <td><button type="button" class="book-btn" data-match="CSK vs RCB">Book</button></td>
-        </tr>
-
-        <tr>
-            <td>2</td>
-            <td>MI vs DC</td>
-            <td>28th August</td>
-            <td>Mumbai</td>
-            <td>500</td>
-            <td><button type="button" class="book-btn" data-match="MI vs DC">Book</button></td>
-        </tr>
-    </table>
-</section>
-
-<!-- BOOKING SECTION -->
-
-<section id="booking">
-    <h1>Book Your Tickets</h1>
-
-    <form id="bookingForm">
-
-        <label>Enter your name:</label>
-        <input type="text" id="t1" placeholder="Your name">
-
-        <label>Enter your email:</label>
-        <input type="text" id="e1" placeholder="Your email">
-
-        <label>Enter your phone number:</label>
-        <input type="text" id="p1" placeholder="10 digit phone number">
-
-        <label>Choose match:</label>
-        <select id="o1">
-            <option>CSK vs RCB</option>
-            <option>MI vs DC</option>
-        </select>
-
-        <label>Choose date:</label>
-        <input type="date" id="d1">
-
-        <label>Choose Stand Category:</label>
-        <select id="c1">
-            <option value="General">General - Rs.500</option>
-            <option value="Premium">Premium - Rs.1000</option>
-            <option value="VIP">VIP - Rs.2000</option>
-        </select>
-
-        <!-- QUANTITY -->
-
-        <label>Choose Ticket Quantity:</label>
-        <input type="number" id="q1" min="1" max="10" value="1">
-
-        <!-- BOOKING SUMMARY -->
-
-        <div id="bookingSummary" class="summary-card">
-
-            <h2>Booking Summary</h2>
-
-            <p>Match: <span id="summaryMatch">CSK vs RCB</span></p>
-
-            <p>Stand: <span id="summaryStand">General</span></p>
-
-            <p>Quantity: <span id="summaryQuantity">1</span></p>
-
-            <p>Price per ticket: Rs.<span id="summaryPrice">500</span></p>
-
-            <h3>Total Price: Rs.<span id="summaryTotal">500</span></h3>
-
+    <nav class="navbar">
+        <a class="logo" href="#top">IPL 2026</a>
+        <button class="menu-toggle" id="menuToggle" type="button"
+                aria-label="Toggle navigation" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </button>
+        <div class="nav-links" id="navLinks">
+            <a href="#matches">Matches</a>
+            <a href="#booking">Book Tickets</a>
+            <a href="#mybookings">My Bookings</a>
+            <a href="#guidelines">Guidelines</a>
         </div>
+    </nav>
 
-        <input type="submit" value="Book My Ticket">
+    <main id="top">
+        <section id="matches" class="section">
+            <h1>IPL Matches</h1>
+            <div class="match-tools">
+                <label for="teamFilter">Filter by team:</label>
+                <select id="teamFilter">
+                    <option value="all">All Teams</option>
+                    <option value="CSK">CSK</option>
+                    <option value="RCB">RCB</option>
+                    <option value="MI">MI</option>
+                    <option value="DC">DC</option>
+                </select>
+                <div class="view-controls" aria-label="Match layout">
+                    <button type="button" id="gridViewBtn" class="active">Grid View</button>
+                    <button type="button" id="listViewBtn">List View</button>
+                </div>
+            </div>
 
-    </form>
-</section>
+            <div id="matchContainer" class="match-grid">
+                <article class="match-card" data-teams="CSK RCB">
+                    <p class="match-number">MATCH 01</p>
+                    <h2>CSK vs RCB</h2>
+                    <p><strong>Date:</strong> 25th August</p>
+                    <p><strong>Venue:</strong> Bangalore</p>
+                    <p><strong>Starting price:</strong> Rs.500</p>
+                    <button type="button" class="book-btn" data-match="CSK vs RCB">Book</button>
+                </article>
+                <article class="match-card" data-teams="MI DC">
+                    <p class="match-number">MATCH 02</p>
+                    <h2>MI vs DC</h2>
+                    <p><strong>Date:</strong> 28th August</p>
+                    <p><strong>Venue:</strong> Mumbai</p>
+                    <p><strong>Starting price:</strong> Rs.500</p>
+                    <button type="button" class="book-btn" data-match="MI vs DC">Book</button>
+                </article>
+            </div>
+            <p id="noMatches" class="empty-message" hidden>No matches found for this team.</p>
+        </section>
 
-<!-- MY BOOKINGS SECTION -->
+        <section id="booking" class="section">
+            <h1>Book Your Tickets</h1>
+            <form id="bookingForm">
+                <div class="form-grid">
+                    <div class="form-field">
+                        <label for="t1">Enter your name:</label>
+                        <input type="text" id="t1" placeholder="Your name">
+                    </div>
+                    <div class="form-field">
+                        <label for="e1">Enter your email:</label>
+                        <input type="email" id="e1" placeholder="Your email">
+                    </div>
+                    <div class="form-field">
+                        <label for="p1">Enter your phone number:</label>
+                        <input type="tel" id="p1" placeholder="10 digit phone number">
+                    </div>
+                    <div class="form-field">
+                        <label for="o1">Choose match:</label>
+                        <select id="o1">
+                            <option>CSK vs RCB</option>
+                            <option>MI vs DC</option>
+                        </select>
+                    </div>
+                    <div class="form-field">
+                        <label for="d1">Choose date:</label>
+                        <input type="date" id="d1">
+                    </div>
+                    <div class="form-field">
+                        <label for="c1">Choose Stand Category:</label>
+                        <select id="c1">
+                            <option value="General">General - Rs.500</option>
+                            <option value="Premium">Premium - Rs.1000</option>
+                            <option value="VIP">VIP - Rs.2000</option>
+                        </select>
+                    </div>
+                    <div class="form-field">
+                        <label for="q1">Choose Ticket Quantity:</label>
+                        <input type="number" id="q1" min="1" max="10" value="1">
+                    </div>
+                </div>
 
-<section id="mybookings">
-    <h1>My Bookings</h1>
-    <div id="myid"></div>
-</section>
+                <div id="bookingSummary" class="summary-card">
+                    <h2>Booking Summary</h2>
+                    <p>Match: <span id="summaryMatch">CSK vs RCB</span></p>
+                    <p>Stand: <span id="summaryStand">General</span></p>
+                    <p>Quantity: <span id="summaryQuantity">1</span></p>
+                    <p>Price per ticket: Rs.<span id="summaryPrice">500</span></p>
+                    <h3>Total Price: Rs.<span id="summaryTotal">500</span></h3>
+                </div>
+                <button class="submit-btn" type="submit">Book My Ticket</button>
+            </form>
+        </section>
 
-<!-- GUIDELINES SECTION -->
+        <section id="mybookings" class="section">
+            <h1>My Bookings</h1>
+            <div id="myid" class="booking-list"></div>
+        </section>
 
-<section id="guidelines">
-    <h1>Guidelines</h1>
+        <section id="guidelines" class="section">
+            <h1>Guidelines</h1>
+            <p>Following documents and instructions will be checked at the entrance:</p>
+            <div class="guideline-grid">
+                <article class="guideline-card">
+                    <h2>Identity Proof</h2>
+                    <p>Carry a valid Aadhar Card or other accepted photo ID.</p>
+                </article>
+                <article class="guideline-card">
+                    <h2>Booking Proof</h2>
+                    <p>Keep your ticket confirmation or booking proof ready.</p>
+                </article>
+                <article class="guideline-card">
+                    <h2>Entry Rules</h2>
+                    <p>Arrive early and follow the stadium entry instructions.</p>
+                </article>
+            </div>
+        </section>
+    </main>
 
-    <p>Following documents will be verified at the entrance:</p>
-
-    <ul>
-        <li>Aadhar Card</li>
-        <li>Booking Proof</li>
-    </ul>
-</section>
-
-<footer>
-    &copy; All Rights Reserved | IPL 2026
-</footer>
-
-<!-- TOAST -->
-
-<div id="toast"></div>
-
+    <footer>&copy; All Rights Reserved | IPL 2026</footer>
+    <div id="toast" role="status" aria-live="polite"></div>
 </body>
 </html>
